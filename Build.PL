@@ -1,2 +1,0 @@
-
-require "Makefile.PL";

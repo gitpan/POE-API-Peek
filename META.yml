@@ -1,14 +1,12 @@
-name: POE-API-Peek
-version: 1.23
-author: Matt Cashner (cpan@eekeek.org)
-license: bsd
-distribution_type: module
-build_requires:
-  Test::More: 0
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         POE-API-Peek
+version:      1.0251
+version_from: lib/POE/API/Peek.pm
+installdirs:  site
 requires:
-  perl: 5.6.1
-  POE: 0.2601
-no_index:
-  directory:
-    - inc
-generated_by: Module::Install version 0.31
+    POE:                           0.2802
+    Test::More:                    0
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.17

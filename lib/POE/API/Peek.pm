@@ -1,4 +1,4 @@
-# $Id: Peek.pm,v 1.23 2004/02/20 04:45:11 sungo Exp $
+# $Id: Peek.pm 251 2004-05-08 02:28:09Z sungo $
 package POE::API::Peek;
 
 =head1 NAME
@@ -30,12 +30,12 @@ use 5.006001;
 use warnings;
 use strict;
 
-our $VERSION = (qw($Revision: 1.23 $))[1];
+our $VERSION = '1.'.sprintf "%04d", (qw($Rev: 251 $))[1];
 
 BEGIN {
     use POE;
-    if($POE::VERSION < '0.2601') {
-        die(__PACKAGE__." is only certified for POE version 0.2601 and up and you are running POE version " . $POE::VERSION . ". Check CPAN for an appropriate version of ".__PACKAGE__.".");
+    if($POE::VERSION < '0.2802') {
+        die(__PACKAGE__." is only certified for POE version 0.2802 and up and you are running POE version " . $POE::VERSION . ". Check CPAN for an appropriate version of ".__PACKAGE__.".");
     }
 }
 
@@ -67,6 +67,55 @@ scalar containing a string.
 =cut
 
 sub id { return $poe_kernel->ID }
+
+# }}}
+
+# Kernel fun {{{
+
+=head1 KERNEL UTILITIES
+
+=cut
+
+# is_kernel_running {{{
+
+=head2 is_kernel_running
+
+    if($api->is_kernel_running) {
+        # do stuff...
+    }
+
+Tell if the POE Kernel is running and active. Returns 1 if the Kernel is 
+running and 0 if it is not.
+
+=cut
+
+sub is_kernel_running { #{{{
+    my $kr_run_warning = ${ $poe_kernel->[ POE::Kernel::KR_RUN() ] };
+
+    if($kr_run_warning |= POE::Kernel::KR_RUN_CALLED()) {
+        return 1;
+    } else {
+        return 0;
+    }
+} #}}}
+
+#}}}
+
+# active_event {{{
+
+=head2 active_event
+
+    my $event = $api->active_event();
+
+Get the active event name. Returns a string containing the event name.
+
+=cut
+
+sub active_event { #{{{
+    return ${ $poe_kernel->[ POE::Kernel::KR_ACTIVE_EVENT() ] }; 
+} #}}}
+
+#}}}
 
 # }}}
 
@@ -750,7 +799,7 @@ Matt Cashner (eek+cpan@eekeek.org)
 
 =head1 DATE
 
-$Date: 2004/02/20 04:45:11 $
+$Date: 2004-05-07 22:28:09 -0400 (Fri, 07 May 2004) $
 
 =head1 LICENSE
 
