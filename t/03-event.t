@@ -50,6 +50,18 @@ sub _start {
     is(ref $queue, 'POE::Queue::Array', 'event_queue() returns POE::Queue::Array object');
 
 # }}}
+
+# event_queue_dump {{{
+    my @queue;
+    eval { @queue = $api->event_queue_dump() };
+    ok(!$@, "event_queue_dump() causes no exceptions: $@");
+    is(scalar @queue, 1, "event_queue_dump() returns the right number of items");
+
+    my $item = $queue[0];
+    is($item->{type}, '_sigchld_poll', 'event_queue_dump() item has proper type');
+    is($item->{event}, '_sigchld_poll', 'event_queue_dump() item has proper event name');
+    is($item->{source}, $item->{destination}, 'event_queue_dump() item has proper source and destination');
+# }}}
     
 }
 

@@ -1,4 +1,17 @@
 Build.PL
+inc/Module/Install.pm
+inc/Module/Install/AutoInstall.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Build.pm
+inc/Module/Install/Can.pm
+inc/Module/Install/Fetch.pm
+inc/Module/Install/Include.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Module/Install/Win32.pm
+inc/Module/Install/WriteAll.pm
+inc/Test/Builder.pm
+inc/Test/More.pm
 lib/POE/API/Peek.pm
 LICENSE
 Makefile.PL
@@ -14,4 +27,3 @@ t/03-event.t
 t/04-extref.t
 t/05-filehandle.t
 t/06-signals.t
-VERSION

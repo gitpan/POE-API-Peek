@@ -1,4 +1,4 @@
-# $Id: Peek.pm,v 1.19 2003/11/03 01:37:23 sungo Exp $
+# $Id: Peek.pm,v 1.23 2004/02/20 04:45:11 sungo Exp $
 package POE::API::Peek;
 
 =head1 NAME
@@ -20,20 +20,17 @@ B<This version of this module is certified against POE version 0.2601 and
 above. It will fail on any other POE version.>
 
 B<Further, this module requires perl v5.6.1 or above. If you are a Mac
-OS X user, please obtain perl5.6.1 via fink or compile v5.8.1. I develop
-this mainly on a mac so I assure you that v5.8.1 compiles and installs
-safely on OS X>
+OS X user, please obtain perl5.6.1 via fink or compile v5.8.2.>
 
 =head1 METHODS
 
 =cut
 
 use 5.006001;
-use POE;
 use warnings;
 use strict;
 
-our $VERSION = (qw($Revision: 1.19 $))[1];
+our $VERSION = (qw($Revision: 1.23 $))[1];
 
 BEGIN {
     use POE;
@@ -41,6 +38,9 @@ BEGIN {
         die(__PACKAGE__." is only certified for POE version 0.2601 and up and you are running POE version " . $POE::VERSION . ". Check CPAN for an appropriate version of ".__PACKAGE__.".");
     }
 }
+
+use POE;
+use POE::Queue::Array;
 
 # new {{{
 
@@ -219,6 +219,31 @@ sub session_count {
 }
 # }}}
 
+# session_list {{{
+
+=head2 session_list
+
+    my @sessions = $api->session_list();
+
+Obtain a list of all the sessions that exist. Takes no parameters.
+Returns a list populated with POE::Session objects.
+
+Note: While the Kernel counts as a session, it has been extracted
+from this list.
+
+=cut
+
+sub session_list {
+   my @sessions;
+   my $kr_sessions = $POE::Kernel::poe_kernel->[POE::Kernel::KR_SESSIONS];
+   foreach my $key ( keys %$kr_sessions ) {
+        next if $key =~ /POE::Kernel/;
+        push @sessions, $kr_sessions->{$key}->[0];
+   }
+   return @sessions;
+}
+# }}}
+
 # }}}
 
 # Alias fun {{{
@@ -314,21 +339,6 @@ sub session_id_loggable {
 
 =cut
 
-# event_queue {{{
-
-=head2 event_queue
-
-    my $foo = $api->event_queue();
-
-Access the internal event queue. Takes no parameters. Returns a scalar
-containing a reference to a POE::Queue::Array object.
-
-=cut
-
-sub event_queue { return $poe_kernel->[POE::Kernel::KR_QUEUE] }
-
-# }}}
-
 # event_count_to {{{
 
 =head2 event_count_to
@@ -369,6 +379,129 @@ sub event_count_from {
 }
 
 #}}}
+
+# event_queue {{{
+
+=head2 event_queue
+
+    my $foo = $api->event_queue();
+
+Access the internal event queue. Takes no parameters. Returns a scalar
+containing a reference to a POE::Queue::Array object.
+
+=cut
+
+sub event_queue { return $poe_kernel->[POE::Kernel::KR_QUEUE] }
+
+# }}}
+
+# event_queue_dump {{{
+
+=head2 event_queue_dump
+    
+    my @queue = $api->event_queue_dump();
+
+Dump the contents of the event queue in a nice understandable fashion.  Takes no
+parameters. Returns a list of queue items. Each item is a hash containing the
+following entries:
+
+=over 4
+
+=item * ID 
+
+The id number that POE's queue identifies this entry as.
+
+=item * index
+
+The index into the POE::Queue::Array which holds this entry.
+
+=item * priority
+
+The priority level this entry has.
+
+=item * event
+
+The name of this event
+
+=item * source
+
+What caused this event. Usually a POE::Session.
+
+=item * destination
+
+Where this event is headed. Usually a POE::Session.
+
+=item * type
+
+The type of event this is. May have the value User, _start, _stop, _signal,
+_garbage_collect, _parent, _child, _sigchld_poll, Alarm, File Activity, or
+Unknown. 
+
+=back
+
+=cut
+
+sub event_queue_dump { 
+    my $self = shift;
+    my $queue = $self->event_queue;
+    my @happy_queue;
+
+    for (my $i = 0; $i < @$queue; $i++) {
+        my $item = {};
+        $item->{ID} = $queue->[$i]->[ITEM_ID];
+        $item->{index} = $i;
+        $item->{priority} = $queue->[$i]->[ITEM_PRIORITY];
+
+        my $payload = $queue->[$i]->[ITEM_PAYLOAD];
+        my $ev_name = $payload->[POE::Kernel::EV_NAME()];
+        $item->{event} = $ev_name;
+        $item->{source} = $payload->[POE::Kernel::EV_SOURCE];
+        $item->{destination} = $payload->[POE::Kernel::EV_SESSION];
+
+        my $type = $payload->[POE::Kernel::EV_TYPE()];
+        my $type_str;
+        if ($type & POE::Kernel::ET_START()) {
+            $type_str = '_start';
+        } elsif ($type & POE::Kernel::ET_STOP()) {
+            $type_str = '_stop';
+        } elsif ($type & POE::Kernel::ET_SIGNAL()) {
+            $type_str = '_signal';
+        } elsif ($type & POE::Kernel::ET_GC()) {
+            $type_str = '_garbage_collect';
+        } elsif ($type & POE::Kernel::ET_PARENT()) {
+            $type_str = '_parent';
+        } elsif ($type & POE::Kernel::ET_CHILD()) {
+            $type_str = '_child';
+        } elsif ($type & POE::Kernel::ET_SCPOLL()) {
+            $type_str = '_sigchld_poll';
+        } elsif ($type & POE::Kernel::ET_ALARM()) {
+            $type_str = 'Alarm';
+        } elsif ($type & POE::Kernel::ET_SELECT()) {
+            $type_str = 'File Activity';
+        } else {
+            if($POE::VERSION <= 0.27) {
+                if($type & POE::Kernel::ET_USER()) {
+                    $type_str = 'User';
+                } else {
+                    $type_str = 'Unknown';
+                }
+            } else {
+                if($type & POE::Kernel::ET_POST()) {
+                    $type_str = 'User';
+                } elsif ($type & POE::Kernel::ET_CALL()) {
+                    $type_str = 'User (not enqueued)';
+                } else {
+                    $type_str = 'Unknown';
+                }
+            }
+        }
+        
+        $item->{type} = $type_str;
+        push @happy_queue, $item;
+    }
+
+    return @happy_queue;
+} #}}}
 
 
 
@@ -605,14 +738,11 @@ sub is_signal_watched_by_session {
 
 # }}}
 
+
 1;
 __END__
 
 =pod
-
-=head1 BUGS
-
-None known at time of writing.
 
 =head1 AUTHOR
 
@@ -620,11 +750,11 @@ Matt Cashner (eek+cpan@eekeek.org)
 
 =head1 DATE
 
-$Date: 2003/11/03 01:37:23 $
+$Date: 2004/02/20 04:45:11 $
 
 =head1 LICENSE
 
-Copyright (c) 2003, Matt Cashner
+Copyright (c) 2003 - 2004, Matt Cashner
 
 Permission is hereby granted, free of charge, to any person obtaining 
 a copy of this software and associated documentation files (the 
