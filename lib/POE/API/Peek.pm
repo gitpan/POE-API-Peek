@@ -1,4 +1,4 @@
-# $Id: Peek.pm,v 1.17 2003/09/14 23:28:14 sungo Exp $
+# $Id: Peek.pm,v 1.19 2003/11/03 01:37:23 sungo Exp $
 package POE::API::Peek;
 
 =head1 NAME
@@ -16,8 +16,8 @@ POE debugging.
 
 =head1 WARNING
 
-B<This version of this module is certified against POE version 0.26 only. It will fail
-on any other poe module.>
+B<This version of this module is certified against POE version 0.2601 and 
+above. It will fail on any other POE version.>
 
 B<Further, this module requires perl v5.6.1 or above. If you are a Mac
 OS X user, please obtain perl5.6.1 via fink or compile v5.8.1. I develop
@@ -33,7 +33,7 @@ use POE;
 use warnings;
 use strict;
 
-our $VERSION = (qw($Revision: 1.17 $))[1];
+our $VERSION = (qw($Revision: 1.19 $))[1];
 
 BEGIN {
     use POE;
@@ -329,7 +329,6 @@ sub event_queue { return $poe_kernel->[POE::Kernel::KR_QUEUE] }
 
 # }}}
 
-
 # event_count_to {{{
 
 =head2 event_count_to
@@ -430,7 +429,6 @@ sub get_session_extref_count {
 =head2 is_handle_tracked
 
     if($api->is_handle_tracked($handle, $mode)) { }
-    if($api->is_handle_tracked($handle)) { }
 
 Determine if POE is tracking a handle. Takes two mandatory parameters, a
 filehandle and a mode indicator. Returns a boolean.
@@ -459,6 +457,8 @@ sub handle_count {
 }
 # }}}
 
+# session_handle_count {{{
+
 =head2 session_handle_count 
 
     my $count = $api->session_handle_count($session);
@@ -475,6 +475,7 @@ sub session_handle_count {
     my $session = shift || $self->current_session();
     return $poe_kernel->_data_handle_count_ses($session);
 }
+# }}}
 
 # }}}
 
@@ -619,7 +620,7 @@ Matt Cashner (eek+cpan@eekeek.org)
 
 =head1 DATE
 
-$Date: 2003/09/14 23:28:14 $
+$Date: 2003/11/03 01:37:23 $
 
 =head1 LICENSE
 

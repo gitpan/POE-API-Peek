@@ -1,10 +1,10 @@
 --- #YAML:1.0
 name: POE-API-Peek
-version: 0.01_01
+version: 0.01
 license: bsd
 distribution_type: module
 requires:
-  POE: '>= 0.2601, <= 0.27'
+  POE: '>= 0.2601'
   perl: 5.6.1
 recommends: {}
 build_requires: {}
@@ -12,5 +12,5 @@ conflicts: {}
 provides:
   POE::API::Peek:
     file: lib/POE/API/Peek.pm
-    version: 1.17
+    version: 1.19
 generated_by: Module::Build version 0.21

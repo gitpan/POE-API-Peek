@@ -9,4 +9,9 @@ README
 t/00-basic.t
 t/00_compile.t
 t/01-session.t
+t/02-alias.t
+t/03-event.t
+t/04-extref.t
+t/05-filehandle.t
+t/06-signals.t
 VERSION

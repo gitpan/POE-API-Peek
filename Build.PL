@@ -8,7 +8,7 @@ my $build = Module::Build->new(
                 dist_version_from  => 'VERSION',
                 requires           => {
                             'perl' => '5.6.1',
-                            'POE'  => '>= 0.2601, <= 0.27',
+                            'POE'  => '>= 0.2601',
                 },
             );
 $build->create_build_script;
