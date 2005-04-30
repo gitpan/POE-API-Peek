@@ -1,15 +1,15 @@
-# $Id: Makefile.PL 223 2004-04-24 20:05:45Z sungo $
+# $Id: Makefile.PL 463 2005-04-30 02:11:19Z sungo $
 
 use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME => 'POE::API::Peek',
     AUTHOR => 'Matt Cashner (sungo@pobox.com)',
-    VERSION_FROM => 'lib/POE/API/Peek.pm',
+    VERSION_FROM => 'VERSION',
     PREREQ_PM => {
-        'POE' => '0.2802',
+        'POE' => '0.29',
         'Test::More' => 0,
     },
     dist => {
-        PREOP => 'svn log > ${DISTVNAME}/Changes',
+        PREOP => 'svn log > $(DISTVNAME)/Changes',
     },
 );

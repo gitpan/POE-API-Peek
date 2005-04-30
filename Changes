@@ -1,4 +1,32 @@
 ------------------------------------------------------------------------
+r466 | sungo | 2005-04-29 22:23:56 -0400 (Fri, 29 Apr 2005) | 1 line
+
+meta file syncs. prepping for release
+------------------------------------------------------------------------
+r465 | sungo | 2005-04-29 22:21:08 -0400 (Fri, 29 Apr 2005) | 1 line
+
+propset update
+------------------------------------------------------------------------
+r464 | sungo | 2005-04-29 22:19:02 -0400 (Fri, 29 Apr 2005) | 1 line
+
+i feel so dirty having to do this to force a version bump. oh well.
+------------------------------------------------------------------------
+r463 | sungo | 2005-04-29 22:11:19 -0400 (Fri, 29 Apr 2005) | 1 line
+
+against my better thinking, this patch should make the makefile not totally bork on winxp. or so i'm told.
+------------------------------------------------------------------------
+r462 | sungo | 2005-04-29 22:06:07 -0400 (Fri, 29 Apr 2005) | 1 line
+
+fix test 03 for the new non-child-polling logic in poe 0.31 by adding a dummy sub we yield to so the event queue actually has something on it
+------------------------------------------------------------------------
+r332 | sungo | 2004-06-18 09:44:19 -0400 (Fri, 18 Jun 2004) | 1 line
+
+require poe 0.29. add a version file for sanity
+------------------------------------------------------------------------
+r321 | sungo | 2004-06-17 10:14:34 -0400 (Thu, 17 Jun 2004) | 1 line
+
+release changes
+------------------------------------------------------------------------
 r251 | sungo | 2004-05-07 22:28:09 -0400 (Fri, 07 May 2004) | 1 line
 
 poe 0.2802 is allowed and happy.
