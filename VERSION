@@ -1,2 +1,2 @@
-our $VERSION = '1.'.sprintf "%04d", (qw($Rev: 465 $))[1];
+our $VERSION = '1.05';
 

@@ -1,0 +1,49 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.44.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 d56d68b8312a3c3503b7ae0680f30c2984522fae LICENSE
+SHA1 ef45d82ab6657a7bbaacaa906667bd4e6ef7706d MANIFEST
+SHA1 db6e5aeea3d888e7bf7c51c9739d457b676e01d4 MANIFEST.SKIP
+SHA1 db449772f672097e2f2cc7cd3241e5db0f14e64b META.yml
+SHA1 74c974a3d96195e0842dad27ea4055b064457d13 Makefile.PL
+SHA1 da39a3ee5e6b4b0d3255bfef95601890afd80709 README
+SHA1 3ef7b7967dd9b666c403a2d966b1e695c090aee8 VERSION
+SHA1 4641161cca4e5eca1b59f86b0ada5c8f335351ff inc/Module/Install.pm
+SHA1 412fd88d5aa0e8b40538e1312bb63e338383a39e inc/Module/Install/Base.pm
+SHA1 c8fd540dd17cc3e3eb153dba71a54fe73ff5c2e2 inc/Module/Install/Can.pm
+SHA1 4464d33fdfbbaf8042894aea1cb85485a1512261 inc/Module/Install/Fetch.pm
+SHA1 81297907d0fc6c8d1fa18af02eac3e63c8e212e4 inc/Module/Install/Makefile.pm
+SHA1 130e33247978183b37c6c252659320a2c5da10fc inc/Module/Install/Metadata.pm
+SHA1 e9755612a43199453c11e2294b2356035b0b56bc inc/Module/Install/Win32.pm
+SHA1 13bed7b359c03a633680c4a26500bb662e20e1ee inc/Module/Install/WriteAll.pm
+SHA1 3c84f5d841e4f557d05ededc3dd926498d52509e lib/POE/API/Peek.pm
+SHA1 53eac6bb52973ff6d7ff70b5a86041a406fd82e2 t/00-basic.t
+SHA1 f7fb46f3447c3daab2343eaea5acd45868009c6f t/000-signature.t
+SHA1 e6799cf9a5dfc9795df811c16c21b20680df1e7e t/00_compile.t
+SHA1 aa461444109b2ee68c288e7448919ee961a7e8c0 t/01-session.t
+SHA1 27902580ffb44fb2d19421f4693f455a45155628 t/02-alias.t
+SHA1 f0165262fca717634a0ef2fc58f7a09a87c12639 t/03-event.t
+SHA1 7d8abcadf941994c3f2a329711fee447343ec04b t/04-extref.t
+SHA1 3eda1efcaf1eee00b5c7e3d43d70c186ffea652a t/05-filehandle.t
+SHA1 72c8c831b067e4dc4d805dd77dfe7c481ef2f0a9 t/06-signals.t
+SHA1 597cfddcd548899bc04497a008156eecbb0ba45d t/07-kernel.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFDd/uA5xrCYZCVAioRAoU6AJ9PKZkMeccsMFiHdxbnPBhMObhtdQCfWYkJ
+SFTMEcO3Ki1of0pIBfR65hk=
+=0LBG
+-----END PGP SIGNATURE-----

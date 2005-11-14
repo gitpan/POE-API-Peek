@@ -1,6 +1,4 @@
 
-# Tests for session related api. see code block marked "Session fun".
-
 use Test::More qw|no_plan|;
 
 use warnings;
@@ -15,7 +13,7 @@ my $api = POE::API::Peek->new();
 POE::Session->create(
     inline_states => {
         _start => \&_start,
-        _stop => \&_stop,
+        _stop => sub {},
 
     },
     heap => { api => $api },
@@ -33,11 +31,19 @@ sub _start {
     ok($api->is_kernel_running, "is_kernel_running() successfully reports that Kernel is in fact running.");
     is($api->active_event,'_start', "active_event() returns proper event name");
 
+# kernel_memory_size {{{
+	my $size;
+	eval { $size = $api->kernel_memory_size() };
+	ok(!$@, "kernel_memory_size() causes no exceptions");
+
+	# we can't really test this value much since its going to be different on 
+	# every system, and even between runs
+
+	ok(defined $size, "kernel_memory_size() returns data");
+	ok($size > 0, "kernel_memory_size() returns non-zero value");
+
+# }}}
 
 }
 
 
-sub _stop {
-
-
-}

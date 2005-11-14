@@ -1,15 +1,17 @@
-# $Id: Makefile.PL 463 2005-04-30 02:11:19Z sungo $
+# $Id: Makefile.PL 571 2005-11-14 02:40:13Z sungo $
 
-use ExtUtils::MakeMaker;
-WriteMakefile(
-    NAME => 'POE::API::Peek',
-    AUTHOR => 'Matt Cashner (sungo@pobox.com)',
-    VERSION_FROM => 'VERSION',
-    PREREQ_PM => {
-        'POE' => '0.29',
-        'Test::More' => 0,
-    },
-    dist => {
-        PREOP => 'svn log > $(DISTVNAME)/Changes',
-    },
-);
+use inc::Module::Install;
+
+name            ('POE-API-Peek');
+author          ('Matt Cashner (sungo@pobox.com)');
+version_from    ('VERSION');
+license         ('bsd');
+
+requires        ('perl' => 5.006001);
+requires        ('POE' => 0.29);
+requires        ('Devel::Size');
+requires        ('Test::More');
+
+sign            (1);
+
+WriteAll();

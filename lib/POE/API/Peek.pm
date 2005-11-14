@@ -1,4 +1,4 @@
-# $Id: Peek.pm 251 2004-05-08 02:28:09Z sungo $
+# $Id: Peek.pm 567 2005-11-14 01:43:21Z sungo $
 package POE::API::Peek;
 
 =head1 NAME
@@ -30,7 +30,7 @@ use 5.006001;
 use warnings;
 use strict;
 
-our $VERSION = '1.'.sprintf "%04d", (qw($Rev: 251 $))[1];
+our $VERSION = '1.'.sprintf "%04d", (qw($Rev: 567 $))[1];
 
 BEGIN {
     use POE;
@@ -41,6 +41,7 @@ BEGIN {
 
 use POE;
 use POE::Queue::Array;
+use Devel::Size qw(total_size);
 
 # new {{{
 
@@ -116,6 +117,22 @@ sub active_event { #{{{
 } #}}}
 
 #}}}
+
+# kernel_memory_size {{{
+
+=head2 kernel_memory_size
+
+	my $size = $api->kernel_memory_size();
+
+Get the memory footprint of the kernel and consequently the entire POE environment.
+See the Devel::Size documentation for several caveats involved in this metric.
+
+=cut
+
+sub kernel_memory_size { #{{{
+	return total_size($poe_kernel);
+} # }}}
+# }}}
 
 # }}}
 
@@ -292,6 +309,28 @@ sub session_list {
    return @sessions;
 }
 # }}}
+
+# session_memory_size {{{
+
+=pod
+
+=head2 session_memory_size
+
+	my $size = $api->session_memory_size();
+	my $size = $api->session_memory_size($session);
+
+Get the memory footprint of a session. If no session is provided, the current
+session is used. See the Devel::Size documentation for several caveats 
+involved in this metric.
+
+=cut
+
+sub session_memory_size {
+    my $self = shift;
+    my $session = shift || $self->current_session();
+	return total_size($session);
+}
+# }}}}
 
 # }}}
 
@@ -799,7 +838,7 @@ Matt Cashner (eek+cpan@eekeek.org)
 
 =head1 DATE
 
-$Date: 2004-05-07 22:28:09 -0400 (Fri, 07 May 2004) $
+$Date: 2005-11-13 20:43:21 -0500 (Sun, 13 Nov 2005) $
 
 =head1 LICENSE
 
