@@ -10,7 +10,7 @@ use_ok('POE::API::Peek');
 
 my $api = POE::API::Peek->new();
 
-POE::Session->create(
+my $sess = POE::Session->create(
     inline_states => {
         _start => \&_start,
         _stop => sub {},
@@ -34,13 +34,28 @@ sub _start {
 # kernel_memory_size {{{
 	my $size;
 	eval { $size = $api->kernel_memory_size() };
-	ok(!$@, "kernel_memory_size() causes no exceptions");
+	is($@, '', "kernel_memory_size() causes no exceptions");
 
 	# we can't really test this value much since its going to be different on 
 	# every system, and even between runs
 
 	ok(defined $size, "kernel_memory_size() returns data");
 	ok($size > 0, "kernel_memory_size() returns non-zero value");
+
+# }}}
+
+
+# event_list {{{
+	my $events;
+	eval { $events = $api->event_list() };
+	is($@, '', "event_list() causes no exceptions");
+
+	is(ref $events, 'HASH', "event_list() returns hashref");
+	ok(keys %$events, "event_list() returns populated hashref");
+
+	my $id = $sess->ID;
+
+	is_deeply($events, { $id => [ '_start', '_stop' ] }, "event_list() returns correct list of sessions and events");
 
 # }}}
 

@@ -14,36 +14,36 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 d56d68b8312a3c3503b7ae0680f30c2984522fae LICENSE
+SHA1 266bd958d81d8b92a6b69231852ea66d69a01bc9 LICENSE
 SHA1 ef45d82ab6657a7bbaacaa906667bd4e6ef7706d MANIFEST
 SHA1 db6e5aeea3d888e7bf7c51c9739d457b676e01d4 MANIFEST.SKIP
-SHA1 db449772f672097e2f2cc7cd3241e5db0f14e64b META.yml
-SHA1 74c974a3d96195e0842dad27ea4055b064457d13 Makefile.PL
-SHA1 da39a3ee5e6b4b0d3255bfef95601890afd80709 README
-SHA1 3ef7b7967dd9b666c403a2d966b1e695c090aee8 VERSION
-SHA1 4641161cca4e5eca1b59f86b0ada5c8f335351ff inc/Module/Install.pm
-SHA1 412fd88d5aa0e8b40538e1312bb63e338383a39e inc/Module/Install/Base.pm
-SHA1 c8fd540dd17cc3e3eb153dba71a54fe73ff5c2e2 inc/Module/Install/Can.pm
-SHA1 4464d33fdfbbaf8042894aea1cb85485a1512261 inc/Module/Install/Fetch.pm
-SHA1 81297907d0fc6c8d1fa18af02eac3e63c8e212e4 inc/Module/Install/Makefile.pm
-SHA1 130e33247978183b37c6c252659320a2c5da10fc inc/Module/Install/Metadata.pm
-SHA1 e9755612a43199453c11e2294b2356035b0b56bc inc/Module/Install/Win32.pm
-SHA1 13bed7b359c03a633680c4a26500bb662e20e1ee inc/Module/Install/WriteAll.pm
-SHA1 3c84f5d841e4f557d05ededc3dd926498d52509e lib/POE/API/Peek.pm
+SHA1 f2388180e1db3bc97b1864f8cf43b06eababc26e META.yml
+SHA1 34c69ebf62d715ae871caef10780abbd955c5544 Makefile.PL
+SHA1 03488b2ebd6350a7ccf7aaa4c7a556b5d93b959b README
+SHA1 3e0d18e4b5d4129a42b44a2661056658162321ac VERSION
+SHA1 cb909f6f9f1e594f0184ee69ce836ca2beeaf696 inc/Module/Install.pm
+SHA1 18fc56d18a1079e8506e611d55f8de24cc957cc7 inc/Module/Install/Base.pm
+SHA1 e9f6cf6af98e6eb1d2faacd9c8240654f81a2390 inc/Module/Install/Can.pm
+SHA1 a3a163eedae4a8e01c8c3d730691c32b1a24ba49 inc/Module/Install/Fetch.pm
+SHA1 96c2d57d4739f359a1fec778c657ec2f45711953 inc/Module/Install/Makefile.pm
+SHA1 eb31736c09fcd5ef2183067b2f8a8d06ad5f63a2 inc/Module/Install/Metadata.pm
+SHA1 b26d7bdeabd56a0fb3c7bb6dfff0e7bcd091c14e inc/Module/Install/Win32.pm
+SHA1 0e609d62ed5a30bb71b784e04be48957efdd631f inc/Module/Install/WriteAll.pm
+SHA1 8d273c87b0ea59f13ee5cd151e4439f45780f843 lib/POE/API/Peek.pm
 SHA1 53eac6bb52973ff6d7ff70b5a86041a406fd82e2 t/00-basic.t
 SHA1 f7fb46f3447c3daab2343eaea5acd45868009c6f t/000-signature.t
 SHA1 e6799cf9a5dfc9795df811c16c21b20680df1e7e t/00_compile.t
-SHA1 aa461444109b2ee68c288e7448919ee961a7e8c0 t/01-session.t
+SHA1 d75fbbf13a7aece5af2bdb867fa25c59fd626e60 t/01-session.t
 SHA1 27902580ffb44fb2d19421f4693f455a45155628 t/02-alias.t
 SHA1 f0165262fca717634a0ef2fc58f7a09a87c12639 t/03-event.t
 SHA1 7d8abcadf941994c3f2a329711fee447343ec04b t/04-extref.t
 SHA1 3eda1efcaf1eee00b5c7e3d43d70c186ffea652a t/05-filehandle.t
 SHA1 72c8c831b067e4dc4d805dd77dfe7c481ef2f0a9 t/06-signals.t
-SHA1 597cfddcd548899bc04497a008156eecbb0ba45d t/07-kernel.t
+SHA1 2947e75e062cf26ae6548859c8675075824c1f53 t/07-kernel.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-iD8DBQFDd/uA5xrCYZCVAioRAoU6AJ9PKZkMeccsMFiHdxbnPBhMObhtdQCfWYkJ
-SFTMEcO3Ki1of0pIBfR65hk=
-=0LBG
+iD8DBQFDk+5v5xrCYZCVAioRAl8eAJ93DQeA7ATIYt6GvySuV9Ochty3bACdFR1W
+ztYt+0JJ7ZzDHDKewoa/YmQ=
+=B4wh
 -----END PGP SIGNATURE-----

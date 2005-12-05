@@ -16,6 +16,7 @@ POE::Session->create(
 	inline_states => {
 		_start => \&_start,
 		_stop => sub {},
+		stub => sub {},
 	},
 	heap => { api => $api },
 );
@@ -120,6 +121,19 @@ sub _start {
 	ok(defined $new_size, "session_memory_size() returns data");
 	ok($new_size > 0, "session_memory_size() returns non-zero value");
 	is($new_size, $size, "session_memory_size: memory size matches between runs");
+# }}}
+
+# session_event_list {{{
+	my @events;
+	eval { @events = $api->session_event_list() };
+	ok(!$@, "session_event_list() causes no exceptions");
+
+	ok(scalar @events, "session_event_list() returns data");
+	ok(scalar @events > 0, "session_event_list() returns more than one value");
+
+
+	is_deeply(\@events, [ '_start','_stop','stub' ], "session_event_list() returns correct list of events");
+
 # }}}
 
 }
