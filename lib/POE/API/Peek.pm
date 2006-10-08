@@ -29,7 +29,7 @@ use 5.006001;
 use warnings;
 use strict;
 
-our $VERSION = '1.'.sprintf "%04d", (qw($Rev: 18 $))[1];
+our $VERSION = '2.'.sprintf "%04d", (qw($Rev: 20 $))[1];
 
 BEGIN {
 	use POE;
@@ -914,7 +914,7 @@ Matt Cashner (sungo@pobox.com)
 
 =head1 DATE
 
-$Date: 2006-10-08 11:06:28 -0400 (Sun, 08 Oct 2006) $
+$Date: 2006-10-08 11:20:34 -0400 (Sun, 08 Oct 2006) $
 
 =head1 LICENSE
 
