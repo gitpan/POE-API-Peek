@@ -1,4 +1,4 @@
-# $Id: Makefile.PL 596 2005-12-05 07:39:23Z sungo $
+# $Id: Makefile.PL 615 2005-12-08 05:44:24Z sungo $
 
 use inc::Module::Install;
 
@@ -8,9 +8,13 @@ version_from    ('VERSION');
 license         ('bsd');
 
 requires        ('perl' => 5.006001);
-requires        ('POE' => 0.29);
+requires        ('POE'  => 0.38);
 requires        ('Devel::Size');
-build_requires  ('Test::More');
+requires        ('Test::More');
+
+build_requires  ('Test::Distribution');
+build_requires  ('Test::Pod::Coverage');
+build_requires  ('Module::Signature');
 
 sign            (1);
 

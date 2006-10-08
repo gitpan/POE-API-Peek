@@ -16,7 +16,6 @@ README
 SIGNATURE
 t/00-basic.t
 t/000-signature.t
-t/00_compile.t
 t/01-session.t
 t/02-alias.t
 t/03-event.t

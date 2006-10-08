@@ -1,15 +1,19 @@
-name: POE-API-Peek
-version: 1.06
 author: Matt Cashner (sungo@pobox.com)
-license: bsd
-distribution_type: module
 build_requires:
-  Test::More: 0
-requires:
-  perl: 5.6.1
-  POE: 0.29
-  Devel::Size: 0
+  Module::Signature: 0
+  Test::Distribution: 0
+  Test::Pod::Coverage: 0
+distribution_type: module
+generated_by: Module::Install version 0.64
+license: bsd
+name: POE-API-Peek
 no_index:
   directory:
     - inc
-generated_by: Module::Install version 0.36
+    - t
+requires:
+  Devel::Size: 0
+  POE: 0.38
+  Test::More: 0
+  perl: 5.6.1
+version: 1.08

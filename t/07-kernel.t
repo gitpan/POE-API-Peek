@@ -1,5 +1,5 @@
 
-use Test::More qw|no_plan|;
+use Test::More tests => 10;
 
 use warnings;
 use strict;
@@ -58,6 +58,8 @@ sub _start {
 	is_deeply($events, { $id => [ '_start', '_stop' ] }, "event_list() returns correct list of sessions and events");
 
 # }}}
+
+    is($api->which_loop(), 'POE::Loop::Select', 'which_loop() loop name check');
 
 }
 

@@ -1,4 +1,4 @@
-# $Id: Peek.pm 594 2005-12-05 07:37:46Z sungo $
+# $Id: Peek.pm 621 2005-12-10 22:50:26Z sungo $
 package POE::API::Peek;
 
 =head1 NAME
@@ -16,7 +16,7 @@ POE debugging.
 
 =head1 WARNING
 
-B<This version of this module is certified against POE version 0.2601 and 
+B<This version of this module is certified against POE version 0.38 and 
 above. It will fail on any other POE version.>
 
 B<Further, this module requires perl v5.6.1 or above.>
@@ -29,12 +29,12 @@ use 5.006001;
 use warnings;
 use strict;
 
-our $VERSION = '1.'.sprintf "%04d", (qw($Rev: 594 $))[1];
+our $VERSION = '1.'.sprintf "%04d", (qw($Rev: 18 $))[1];
 
 BEGIN {
 	use POE;
-	if($POE::VERSION < '0.2802') {
-		die(__PACKAGE__." is only certified for POE version 0.2802 and up and you are running POE version " . $POE::VERSION . ". Check CPAN for an appropriate version of ".__PACKAGE__.".");
+	if($POE::VERSION < '0.38') {
+		die(__PACKAGE__." is only certified for POE version 0.38 and up and you are running POE version " . $POE::VERSION . ". Check CPAN for an appropriate version of ".__PACKAGE__.".");
 	}
 }
 
@@ -164,6 +164,24 @@ sub event_list {
 	return \%events;
 }
 # }}}
+
+# which_loop {{{
+
+=head2 which_loop
+
+  my $loop_name = $api->which_loop();
+
+Tell which Loop POE has decided to use. Returns the string name of the Loop
+module.
+
+=cut
+
+sub which_loop {
+	return POE::Kernel::poe_kernel_loop();
+}
+
+#}}}
+
 
 # }}}
 
@@ -896,7 +914,7 @@ Matt Cashner (sungo@pobox.com)
 
 =head1 DATE
 
-$Date: 2005-12-05 02:37:46 -0500 (Mon, 05 Dec 2005) $
+$Date: 2006-10-08 11:06:28 -0400 (Sun, 08 Oct 2006) $
 
 =head1 LICENSE
 
@@ -927,8 +945,6 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-=cut
 
 =cut
 
