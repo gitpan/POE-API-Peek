@@ -1,4 +1,3 @@
-# $Id: Peek.pm 621 2005-12-10 22:50:26Z sungo $
 package POE::API::Peek;
 
 =head1 NAME
@@ -29,7 +28,7 @@ use 5.006001;
 use warnings;
 use strict;
 
-our $VERSION = '2.'.sprintf "%04d", (qw($Rev: 20 $))[1];
+our $VERSION = '2.11';
 
 BEGIN {
 	use POE;
@@ -39,7 +38,6 @@ BEGIN {
 }
 
 use POE;
-use POE::Queue::Array;
 use Devel::Size qw(total_size);
 $Devel::Size::warn = 0;
 
@@ -609,14 +607,17 @@ sub event_queue_dump {
 	my $self = shift;
 	my $queue = $self->event_queue;
 	my @happy_queue;
+	my @queue = $queue->peek_items(sub { return 1; });
 
-	for (my $i = 0; $i < @$queue; $i++) {
+	my $i = 0;
+	foreach my $qitem (@queue) {
 		my $item = {};
-		$item->{ID} = $queue->[$i]->[ITEM_ID];
-		$item->{index} = $i;
-		$item->{priority} = $queue->[$i]->[ITEM_PRIORITY];
+		my ($priority, $id, $payload) = @$qitem;
+		 
+		$item->{ID} = $id;
+		$item->{index} = $i++;
+		$item->{priority} = $priority; 
 
-		my $payload = $queue->[$i]->[ITEM_PAYLOAD];
 		my $ev_name = $payload->[POE::Kernel::EV_NAME()];
 		$item->{event} = $ev_name;
 		$item->{source} = $payload->[POE::Kernel::EV_SOURCE];
@@ -912,13 +913,9 @@ __END__
 
 Matt Cashner (sungo@pobox.com)
 
-=head1 DATE
-
-$Date: 2006-10-08 11:20:34 -0400 (Sun, 08 Oct 2006) $
-
 =head1 LICENSE
 
-Copyright (c) 2003 - 2005, Matt Cashner. All rights reserved.
+Copyright (c) 2003 - 2008, Matt Cashner. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
