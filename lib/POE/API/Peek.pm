@@ -28,7 +28,7 @@ use 5.006001;
 use warnings;
 use strict;
 
-our $VERSION = '2.11';
+our $VERSION = '2.12';
 
 BEGIN {
 	use POE;
@@ -251,6 +251,27 @@ sub is_session_child {
 	return $poe_kernel->_data_ses_is_child($parent, $session);
 }
 # }}}
+
+# get_session_parent {{{
+
+=head2 get_session_parent
+
+    my $parent = $api->get_session_parent($session);
+    my $parent = $api->get_session_parent();
+
+Get the parent for a given session. Takes one optional parameter, a
+POE::Session object. If this parameter is not provided, the method defaults to
+the currently active session. Returns a POE::Session object.
+
+=cut
+
+sub get_session_parent {
+	my $self = shift;
+	my $session = shift || $self->current_session();
+	return $poe_kernel->_data_ses_get_parent($session);
+}
+# }}}
+
 
 # resolve_session_to_ref {{{
 
@@ -912,10 +933,13 @@ __END__
 =head1 AUTHOR
 
 Matt Cashner (sungo@pobox.com)
+Yuvol Kogman (nothingmuch@woobling.org)
+
 
 =head1 LICENSE
 
-Copyright (c) 2003 - 2008, Matt Cashner. All rights reserved.
+Copyright (c) 2003 - 2008, Matt Cashner. 
+Copyright (c) 2008, Yuvol Kogman
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
