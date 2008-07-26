@@ -28,7 +28,7 @@ use 5.006001;
 use warnings;
 use strict;
 
-our $VERSION = '2.12';
+our $VERSION = '2.13';
 
 BEGIN {
 	use POE;
@@ -930,16 +930,26 @@ __END__
 
 =pod
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Matt Cashner (sungo@pobox.com)
-Yuvol Kogman (nothingmuch@woobling.org)
+=over 4
+
+=item Matt Cashner (sungo@pobox.com)
+
+=item Yuval Kogman (nothingmuch@woobling.org)
+
+=back
 
 
 =head1 LICENSE
 
-Copyright (c) 2003 - 2008, Matt Cashner. 
-Copyright (c) 2008, Yuvol Kogman
+=over 4
+
+=item Copyright (c) 2003 - 2008, Matt Cashner. 
+
+=item Copyright (c) 2008, Yuval Kogman
+
+=back
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
