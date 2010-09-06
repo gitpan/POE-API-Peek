@@ -1,6 +1,6 @@
 package POE::API::Peek;
 BEGIN {
-  $POE::API::Peek::VERSION = '2.16_1';
+  $POE::API::Peek::VERSION = '2.16_2';
 }
 # ABSTRACT: Peek into the internals of a running POE environment
 
@@ -14,13 +14,8 @@ BEGIN {
 	use POE;
 	my $ver = $POE::VERSION;
 	$ver =~ s/_.+$//;
-	if($ver < '1.0001') {
-		die(__PACKAGE__." is only certified for POE version 1.0001 and up and you are running POE version " . $ver . ". Check CPAN for an appropriate version of ".__PACKAGE__.".");
-	}
-	if($ver >= '1.289') {
-		eval "use constant BROKEN_POE_EVENT_QUEUE => 1;"
-	} else {
-		eval "use constant BROKEN_POE_EVENT_QUEUE => 0;"
+	if($ver < '1.293') {
+		die(__PACKAGE__." is only certified for POE version 1.293 and up and you are running POE version " . $ver . ". Check CPAN for an appropriate version of ".__PACKAGE__.".");
 	}
 }
 
@@ -292,22 +287,9 @@ sub session_id_loggable {
 # Event fun {{{
 
 
-sub _broken_poe_event_bitch {
-	my $self = shift;
-	return if $self->{broken_event_queue_bitch};
-	carp("POE v1.289 and above have a broken dual event queue that renders the event API in POE::API::Peek mostly useless.");
-	$self->{broken_event_queue_bitch}++;
-	return;
-}
-
-# event_count_to {{{
-
-
 sub event_count_to {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-
-	$self->_broken_poe_event_bitch if BROKEN_POE_EVENT_QUEUE;
 	return $poe_kernel->_data_ev_get_count_to($session);    
 }
 #}}}
@@ -318,8 +300,6 @@ sub event_count_to {
 sub event_count_from {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-
-	$self->_broken_poe_event_bitch if BROKEN_POE_EVENT_QUEUE;
 	return $poe_kernel->_data_ev_get_count_from($session);    
 }
 
@@ -329,8 +309,6 @@ sub event_count_from {
 
 
 sub event_queue { 
-	my $self = shift;
-	$self->_broken_poe_event_bitch if BROKEN_POE_EVENT_QUEUE;
 	return $poe_kernel->[POE::Kernel::KR_QUEUE] 
 }
 
@@ -343,7 +321,6 @@ sub event_queue_dump {
 	my $self = shift;
 	my $queue = $self->event_queue;
 
-	$self->_broken_poe_event_bitch if BROKEN_POE_EVENT_QUEUE;
 	my @happy_queue;
 	my @queue = $queue->peek_items(sub { return 1; });
 
@@ -382,22 +359,12 @@ sub event_queue_dump {
 		} elsif ($type & POE::Kernel::ET_SELECT()) {
 			$type_str = 'File Activity';
 		} else {
-			my $ver = $POE::VERSION;
-			$ver =~ s/_.+$//;
-			if($ver <= 0.27) {
-				if($type & POE::Kernel::ET_USER()) {
-					$type_str = 'User';
-				} else {
-					$type_str = 'Unknown';
-				}
+			if($type & POE::Kernel::ET_POST()) {
+				$type_str = 'User';
+			} elsif ($type & POE::Kernel::ET_CALL()) {
+				$type_str = 'User (not enqueued)';
 			} else {
-				if($type & POE::Kernel::ET_POST()) {
-					$type_str = 'User';
-				} elsif ($type & POE::Kernel::ET_CALL()) {
-					$type_str = 'User (not enqueued)';
-				} else {
-					$type_str = 'Unknown';
-				}
+				$type_str = 'Unknown';
 			}
 		}
         
@@ -504,7 +471,15 @@ sub is_signal_watched {
 sub signals_watched_by_session {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_sig_watched_by_session($session);
+	my %sigs = $poe_kernel->_data_sig_watched_by_session($session);
+
+	my %ret;
+	foreach my $k (keys %sigs) {
+		my $ev = $sigs{$k}[0];
+		$ret{$k} = $ev;
+	}
+
+	return %ret;
 }
 # }}}
 
@@ -514,7 +489,15 @@ sub signals_watched_by_session {
 sub signal_watchers {
 	my $self = shift;
 	my $sig = shift or return undef;
-	return $poe_kernel->_data_sig_watchers($sig);
+	my %sigs = $poe_kernel->_data_sig_watchers($sig);
+
+	my %ret;
+	foreach my $k (keys %sigs) {
+		my $ev = $sigs{$k}[0];
+		$ret{$k} = $ev;
+	}
+
+	return %ret;
 }
 # }}}
 
@@ -543,7 +526,7 @@ POE::API::Peek - Peek into the internals of a running POE environment
 
 =head1 VERSION
 
-version 2.16_1
+version 2.16_2
 
 =head1 DESCRIPTION
 
@@ -556,7 +539,7 @@ POE debugging.
 
 =head1 WARNING
 
-B<This version of this module is certified against POE version 1.0001 and 
+B<This version of this module is certified against POE version 1.293 and 
 above. It will fail on any other POE version.>
 
 B<Further, this module requires perl v5.6.1 or above.>
@@ -887,28 +870,7 @@ default to the currently active session. Returns a string.
 
 =head1 EVENT UTILITIES
 
-=head2 BREAKAGE ALERT
-
-POE v1.289 introduced a dual event queue system. All non-alarm events
-are no longer put on the normal event queue but kept in a lexical queue
-deep inside of POE.
-
-The dual queue means that, while POE::API::Peek can access the event
-queue, only alarms will be found there. For most normal purposes, the
-event utilities in POE::API::Peek are useless for POE versions 1.289 or
-greater.
-
-If POE::API::Peek is used under one of these broken POEs, it will emit a
-warning (via Carp) the first time an event utility is used. You will
-see:
-
-C<POE v1.289 and above have a broken dual event queue that renders the
-event API in POE::API::Peek mostly useless. at your_code.pl line 15>
-
-=cut
-
-=pod
-
+# event_count_to {{{
 
 =head2 event_count_to
 
@@ -1073,6 +1035,14 @@ supplied, it will default to the currently active session.
 =pod
 
 =head1 SIGNAL UTILITIES
+
+POTENTIAL BREAKAGE NOTE: In POE v1.293 (in particular: svn rev 2916)
+changed the structure of signals. Previously, the data portion of a
+signal was simply the name of the event to be called. Now it contains a
+data portion, continuation style arguments that may be passed on to the
+signal handler.
+
+See the L<POE::Kernel> documentation for more info.
 
 =cut
 

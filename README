@@ -2,7 +2,7 @@ NAME
     POE::API::Peek - Peek into the internals of a running POE environment
 
 VERSION
-    version 2.16_1
+    version 2.16_2
 
 DESCRIPTION
     POE::API::Peek extends the POE::Kernel interface to provide clean access
@@ -13,7 +13,7 @@ DESCRIPTION
     POE debugging.
 
 WARNING
-    This version of this module is certified against POE version 1.0001 and
+    This version of this module is certified against POE version 1.293 and
     above. It will fail on any other POE version.
 
     Further, this module requires perl v5.6.1 or above.
@@ -191,22 +191,7 @@ ALIAS UTILITIES
     default to the currently active session. Returns a string.
 
 EVENT UTILITIES
-  BREAKAGE ALERT
-    POE v1.289 introduced a dual event queue system. All non-alarm events
-    are no longer put on the normal event queue but kept in a lexical queue
-    deep inside of POE.
-
-    The dual queue means that, while POE::API::Peek can access the event
-    queue, only alarms will be found there. For most normal purposes, the
-    event utilities in POE::API::Peek are useless for POE versions 1.289 or
-    greater.
-
-    If POE::API::Peek is used under one of these broken POEs, it will emit a
-    warning (via Carp) the first time an event utility is used. You will
-    see:
-
-    "POE v1.289 and above have a broken dual event queue that renders the
-    event API in POE::API::Peek mostly useless. at your_code.pl line 15"
+    # event_count_to {{{
 
   event_count_to
       my $count = $api->event_count_to($session);
@@ -304,6 +289,14 @@ FILEHANDLE UTILITIES
     supplied, it will default to the currently active session.
 
 SIGNAL UTILITIES
+    POTENTIAL BREAKAGE NOTE: In POE v1.293 (in particular: svn rev 2916)
+    changed the structure of signals. Previously, the data portion of a
+    signal was simply the name of the event to be called. Now it contains a
+    data portion, continuation style arguments that may be passed on to the
+    signal handler.
+
+    See the POE::Kernel documentation for more info.
+
   get_safe_signals
       my @safe_signals = $api->get_safe_signals();
 

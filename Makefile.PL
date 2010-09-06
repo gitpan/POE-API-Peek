@@ -21,10 +21,10 @@ my %WriteMakefileArgs = (
   'NAME' => 'POE::API::Peek',
   'PREREQ_PM' => {
     'Devel::Size' => '0',
-    'POE' => '1.0001',
+    'POE' => '1.293',
     'Test::More' => '0'
   },
-  'VERSION' => '2.16_1',
+  'VERSION' => '2.16_2',
   'test' => {
     'TESTS' => 't/*.t'
   }

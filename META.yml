@@ -15,6 +15,6 @@ meta-spec:
 name: POE-API-Peek
 requires:
   Devel::Size: 0
-  POE: 1.0001
+  POE: 1.293
   Test::More: 0
-version: 2.16_1
+version: 2.16_2
