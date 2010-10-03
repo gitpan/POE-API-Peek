@@ -17,4 +17,4 @@ requires:
   Devel::Size: 0
   POE: 1.293
   Test::More: 0
-version: 2.16_2
+version: 2.16

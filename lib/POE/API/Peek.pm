@@ -1,6 +1,6 @@
 package POE::API::Peek;
 BEGIN {
-  $POE::API::Peek::VERSION = '2.16_2';
+  $POE::API::Peek::VERSION = '2.16';
 }
 # ABSTRACT: Peek into the internals of a running POE environment
 
@@ -526,7 +526,7 @@ POE::API::Peek - Peek into the internals of a running POE environment
 
 =head1 VERSION
 
-version 2.16_2
+version 2.16
 
 =head1 DESCRIPTION
 

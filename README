@@ -2,7 +2,7 @@ NAME
     POE::API::Peek - Peek into the internals of a running POE environment
 
 VERSION
-    version 2.16_2
+    version 2.16
 
 DESCRIPTION
     POE::API::Peek extends the POE::Kernel interface to provide clean access
