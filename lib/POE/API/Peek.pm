@@ -1,6 +1,6 @@
 package POE::API::Peek;
 BEGIN {
-  $POE::API::Peek::VERSION = '2.16';
+  $POE::API::Peek::VERSION = '2.17';
 }
 # ABSTRACT: Peek into the internals of a running POE environment
 
@@ -133,7 +133,7 @@ sub current_session { return ${ $poe_kernel->[POE::Kernel::KR_ACTIVE_SESSION] } 
 sub get_session_children {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_ses_get_children($session);
+	return $poe_kernel->_data_ses_get_children($session->ID);
 }
 # }}}
 
@@ -144,7 +144,7 @@ sub is_session_child {
 	my $self = shift;
 	my $parent = shift or return undef;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_ses_is_child($parent, $session);
+	return $poe_kernel->_data_ses_is_child($parent->ID, $session->ID);
 }
 # }}}
 
@@ -154,7 +154,7 @@ sub is_session_child {
 sub get_session_parent {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_ses_get_parent($session);
+	return $poe_kernel->_data_ses_get_parent($session->ID);
 }
 # }}}
 
@@ -185,7 +185,7 @@ sub resolve_session_to_id {
 sub get_session_refcount {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_ses_refcount($session);
+	return $poe_kernel->_data_ses_refcount($session->ID);
 }
 # }}}
 
@@ -258,7 +258,7 @@ sub resolve_alias {
 sub session_alias_list {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_alias_list($session);
+	return $poe_kernel->_data_alias_list($session->ID);
 }
 # }}}
 
@@ -268,7 +268,7 @@ sub session_alias_list {
 sub session_alias_count {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_alias_count_ses($session);
+	return $poe_kernel->_data_alias_count_ses($session->ID);
 }
 # }}}
 
@@ -278,7 +278,7 @@ sub session_alias_count {
 sub session_id_loggable {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_alias_loggable($session);
+	return $poe_kernel->_data_alias_loggable($session->ID);
 }
 # }}}
 
@@ -471,7 +471,7 @@ sub is_signal_watched {
 sub signals_watched_by_session {
 	my $self = shift;
 	my $session = shift || $self->current_session();
-	my %sigs = $poe_kernel->_data_sig_watched_by_session($session);
+	my %sigs = $poe_kernel->_data_sig_watched_by_session($session->ID);
 
 	my %ret;
 	foreach my $k (keys %sigs) {
@@ -494,7 +494,7 @@ sub signal_watchers {
 	my %ret;
 	foreach my $k (keys %sigs) {
 		my $ev = $sigs{$k}[0];
-		$ret{$k} = $ev;
+		$ret{$poe_kernel->alias_resolve($k)} = $ev;
 	}
 
 	return %ret;
@@ -508,7 +508,7 @@ sub is_signal_watched_by_session {
 	my $self = shift;
 	my $signal = shift or return undef;
 	my $session = shift || $self->current_session();
-	return $poe_kernel->_data_sig_is_watched_by_session($signal, $session);
+	return $poe_kernel->_data_sig_is_watched_by_session($signal, $session->ID);
 }
 # }}}
 
@@ -526,7 +526,7 @@ POE::API::Peek - Peek into the internals of a running POE environment
 
 =head1 VERSION
 
-version 2.16
+version 2.17
 
 =head1 DESCRIPTION
 
@@ -1131,10 +1131,11 @@ to the currently active session. Returns a boolean.
 
 sungo <sungo@sungo.us>
 Yuval Kogman <nothingmuch@woobling.org>
+Chris 'BinGOs' Williams <bingos@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2010 by Matt Cashner (sungo).
+This software is Copyright (c) 2011 by Matt Cashner (sungo).
 
 This is free software, licensed under:
 

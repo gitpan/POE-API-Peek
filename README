@@ -2,7 +2,7 @@ NAME
     POE::API::Peek - Peek into the internals of a running POE environment
 
 VERSION
-    version 2.16
+    version 2.17
 
 DESCRIPTION
     POE::API::Peek extends the POE::Kernel interface to provide clean access
@@ -345,10 +345,11 @@ SIGNAL UTILITIES
     to the currently active session. Returns a boolean.
 
 AUTHORS
-    sungo <sungo@sungo.us> Yuval Kogman <nothingmuch@woobling.org>
+    sungo <sungo@sungo.us> Yuval Kogman <nothingmuch@woobling.org> Chris
+    'BinGOs' Williams <bingos@cpan.org>
 
 COPYRIGHT AND LICENSE
-    This software is Copyright (c) 2010 by Matt Cashner (sungo).
+    This software is Copyright (c) 2011 by Matt Cashner (sungo).
 
     This is free software, licensed under:
 

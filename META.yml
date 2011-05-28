@@ -3,6 +3,7 @@ abstract: 'Peek into the internals of a running POE environment'
 author:
   - 'sungo <sungo@sungo.us>'
   - 'Yuval Kogman <nothingmuch@woobling.org>'
+  - "Chris 'BinGOs' Williams <bingos@cpan.org>"
 build_requires: {}
 configure_requires:
   ExtUtils::MakeMaker: 6.31
@@ -15,6 +16,6 @@ meta-spec:
 name: POE-API-Peek
 requires:
   Devel::Size: 0
-  POE: 1.293
+  POE: 1.311
   Test::More: 0
-version: 2.16
+version: 2.17

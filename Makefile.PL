@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.31;
 
 my %WriteMakefileArgs = (
   'ABSTRACT' => 'Peek into the internals of a running POE environment',
-  'AUTHOR' => 'sungo <sungo@sungo.us>, Yuval Kogman <nothingmuch@woobling.org>',
+  'AUTHOR' => 'sungo <sungo@sungo.us>, Yuval Kogman <nothingmuch@woobling.org>, Chris \'BinGOs\' Williams <bingos@cpan.org>',
   'BUILD_REQUIRES' => {},
   'CONFIGURE_REQUIRES' => {
     'ExtUtils::MakeMaker' => '6.31'
@@ -21,10 +21,10 @@ my %WriteMakefileArgs = (
   'NAME' => 'POE::API::Peek',
   'PREREQ_PM' => {
     'Devel::Size' => '0',
-    'POE' => '1.293',
+    'POE' => '1.311',
     'Test::More' => '0'
   },
-  'VERSION' => '2.16',
+  'VERSION' => '2.17',
   'test' => {
     'TESTS' => 't/*.t'
   }
