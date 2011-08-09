@@ -4,16 +4,16 @@ use warnings;
 
 
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
   'ABSTRACT' => 'Peek into the internals of a running POE environment',
-  'AUTHOR' => 'sungo <sungo@sungo.us>, Yuval Kogman <nothingmuch@woobling.org>, Chris \'BinGOs\' Williams <bingos@cpan.org>',
+  'AUTHOR' => 'sungo <sungo@sungo.us>, Yuval Kogman <nothingmuch@woobling.org>, Chris \'BinGOs\' Williams <bingos@cpan.org>, Philip Gwyn <gwyn@cpan.org>',
   'BUILD_REQUIRES' => {},
   'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+    'ExtUtils::MakeMaker' => '6.30'
   },
   'DISTNAME' => 'POE-API-Peek',
   'EXE_FILES' => [],
@@ -24,7 +24,7 @@ my %WriteMakefileArgs = (
     'POE' => '1.311',
     'Test::More' => '0'
   },
-  'VERSION' => '2.17',
+  'VERSION' => '2.18',
   'test' => {
     'TESTS' => 't/*.t'
   }

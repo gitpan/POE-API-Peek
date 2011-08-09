@@ -1,5 +1,7 @@
+Changes
 LICENSE
 MANIFEST
+META.json
 META.yml
 Makefile.PL
 README
@@ -13,5 +15,6 @@ t/04-extref.t
 t/05-filehandle.t
 t/06-signals.t
 t/07-kernel.t
+t/08-pid.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t

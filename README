@@ -2,7 +2,7 @@ NAME
     POE::API::Peek - Peek into the internals of a running POE environment
 
 VERSION
-    version 2.17
+    version 2.18
 
 DESCRIPTION
     POE::API::Peek extends the POE::Kernel interface to provide clean access
@@ -13,7 +13,7 @@ DESCRIPTION
     POE debugging.
 
 WARNING
-    This version of this module is certified against POE version 1.293 and
+    This version of this module is certified against POE version 1.300 and
     above. It will fail on any other POE version.
 
     Further, this module requires perl v5.6.1 or above.
@@ -71,15 +71,16 @@ SESSION UTILITIES
     parameters. Returns a scalar containing a reference.
 
   get_session_children
-        my @children = $api->get_session_children($session);
+        my @children = $api->get_session_children($session_id);
         my @children = $api->get_session_children();
 
     Get the children (if any) for a given session. Takes one optional
-    parameter, a POE::Session object. If this parameter is not provided, the
-    method defaults to the currently active session. Returns a list of
-    POE::Session objects.
+    parameter, a POE::Session object or ID. If this parameter is not
+    provided, the method defaults to the currently active session. Returns a
+    list of POE::Session objects.
 
   is_session_child
+      if($api->is_session_child($parent, $session_id)) { }
       if($api->is_session_child($parent, $session)) { }
       if($api->is_session_child($parent)) { }
 
@@ -91,11 +92,12 @@ SESSION UTILITIES
     the currently active session. Returns a boolean.
 
   get_session_parent
+        my $parent = $api->get_session_parent($session_id);
         my $parent = $api->get_session_parent($session);
         my $parent = $api->get_session_parent();
 
     Get the parent for a given session. Takes one optional parameter, a
-    POE::Session object. If this parameter is not provided, the method
+    POE::Session object or ID. If this parameter is not provided, the method
     defaults to the currently active session. Returns a POE::Session object.
 
   resolve_session_to_ref
@@ -112,17 +114,19 @@ SESSION UTILITIES
       my $session_id = $api->resolve_session_to_id();
 
     Obtain the session id for a given POE::Session object. Takes one
-    optional parameter, a POE::Session object. If this parameter is not
-    specified, it will default to the currently active session. Returns an
-    integer on success and undef on failure.
+    optional parameter, a POE::Session object or ID. If this parameter is
+    not specified, it will default to the currently active session. Returns
+    an integer on success and undef on failure.
 
   get_session_refcount
+      my $count = $api->get_session_refcount($session_id);
       my $count = $api->get_session_refcount($session);
       my $count = $api->get_session_refcount();
 
     Obtain the reference count for a given POE::Session. Takes one optional
-    parameter, a POE::Session object. If this parameter is not specified, it
-    will default to the currently active session. Returns an integer.
+    parameter, a POE::Session object or ID. If this parameter is not
+    specified, it will default to the currently active session. Returns an
+    integer.
 
   session_count
       my $count = $api->session_count();
@@ -144,6 +148,7 @@ SESSION UTILITIES
   session_memory_size
       my $size = $api->session_memory_size();
       my $size = $api->session_memory_size($session);
+      my $size = $api->session_memory_size($session_id);
 
     Get the memory footprint of a session. If no session is provided, the
     current session is used. See the Devel::Size documentation for several
@@ -154,6 +159,8 @@ SESSION UTILITIES
       my $events = $api->session_event_list();
       my @events = $api->session_event_list($session);
       my $events = $api->session_event_list($session);
+      my @events = $api->session_event_list($session_id);
+      my $events = $api->session_event_list($session_id);
 
     Get the list of events for a session. If no session is provided, the
     current session is used.
@@ -167,47 +174,54 @@ ALIAS UTILITIES
     undef on failure.
 
   session_alias_list
+      my @aliases = $api->session_alias_list($session_id);
       my @aliases = $api->session_alias_list($session);
       my @aliases = $api->session_alias_list();
 
     Obtain a list of aliases for a POE::Session object. Takes one optional
-    parameter, a POE::Session object. If this parameter is not specified, it
-    will default to the currently active session. Returns a list of strings.
+    parameter, a POE::Session object or ID. If this parameter is not
+    specified, it will default to the currently active session. Returns a
+    list of strings.
 
   session_alias_count
+      my $count = $api->session_alias_count($session_id);
       my $count = $api->session_alias_count($session);
       my $count = $api->session_alias_count();
 
     Obtain the count of how many aliases a session has. Takes one optional
-    parameter, a POE::Session object. If this parameter is not specified, it
-    will default to the currently active session. Returns an integer.
+    parameter, a POE::Session object or ID. If this parameter is not
+    specified, it will default to the currently active session. Returns an
+    integer.
 
   session_id_loggable
+        my $str = $api->session_id_loggable($session_id);
         my $str = $api->session_id_loggable($session);
         my $str = $api->session_id_loggable();
 
     Obtain a loggable version of a session id. Takes one optional parameter,
-    a POE::Session object. If this parameter is not specified, it will
+    a POE::Session object or ID. If this parameter is not specified, it will
     default to the currently active session. Returns a string.
 
 EVENT UTILITIES
     # event_count_to {{{
 
   event_count_to
+      my $count = $api->event_count_to($session_id);
       my $count = $api->event_count_to($session);
       my $count = $api->event_count_to();
 
     Get the number of events heading toward a particular session. Takes one
-    parameter, a POE::Session object. if none is provided, defaults to the
-    current session. Returns an integer.
+    parameter, a POE::Session object or ID. if none is provided, defaults to
+    the current session. Returns an integer.
 
   event_count_from
+      my $count = $api->get_session_extref_count($session_id);
       my $count = $api->event_count_from($session);
       my $count = $api->event_count_from();
 
     Get the number of events heading out from a particular session. Takes
-    one parameter, a POE::Session object. If non is provided, defaults to
-    the current session. Return an integer.
+    one parameter, a POE::Session object or ID. If none is provided,
+    defaults to the current session. Return an integer.
 
   event_queue
       my $foo = $api->event_queue();
@@ -260,12 +274,14 @@ EXTREF UTILITIES
     Returns an integer.
 
   get_session_extref_count
+      my $count = $api->get_session_extref_count($session_id);
       my $count = $api->get_session_extref_count($session);
       my $count = $api->get_session_extref_count();
 
     Obtain the number of extra references a session has. Takes one optional
-    parameter, a POE::Session object. If this parameter is not specified, it
-    will default to the currently active session. Returns an integer.
+    parameter, a POE::Session object or ID. If this parameter is not
+    specified, it will default to the currently active session. Returns an
+    integer.
 
 FILEHANDLE UTILITIES
   is_handle_tracked
@@ -281,12 +297,22 @@ FILEHANDLE UTILITIES
     Returns an integer.
 
   session_handle_count
+      my $count = $api->session_handle_count($session_id);
       my $count = $api->session_handle_count($session);
       my $count = $api->session_handle_count();
 
     Obtain a count of the active handles for a given session. Takes one
-    optional parameter, a POE::Session object. If this parameter is not
-    supplied, it will default to the currently active session.
+    optional parameter, a POE::Session object or ID. If this parameter is
+    not supplied, it will default to the currently active session.
+
+  session_pid_count
+        my $count = $api->session_pid_count($session_id);
+        my $count = $api->session_pid_count($session);
+        my $count = $api->session_pid_count();
+
+    Obtain a count of the process IDs being watched by a session. Takes one
+    optional parameter, a POE::Session object or ID. If this parameter is
+    not supplied, it will default to the currently active session.
 
 SIGNAL UTILITIES
     POTENTIAL BREAKAGE NOTE: In POE v1.293 (in particular: svn rev 2916)
@@ -323,10 +349,10 @@ SIGNAL UTILITIES
       my %signals = $api->signals_watched_by_session();
 
     Get the signals watched by a session and the events they generate. Takes
-    one optional parameter, a POE::Session object. If this parameter is not
-    supplied, it will default to the currently active session. Returns a
-    hash, with a signal name as the key and the event the session generates
-    as the value.
+    one optional parameter, a POE::Session object or ID. If this parameter
+    is not supplied, it will default to the currently active session.
+    Returns a hash, with a signal name as the key and the event the session
+    generates as the value.
 
   signal_watchers
       my %watchers = $api->signal_watchers($signal_name);
@@ -336,17 +362,18 @@ SIGNAL UTILITIES
     reference with an event name as the value.
 
   is_signal_watched_by_session
+      if($api->is_signal_watched_by_session($signal_name, $session_id)) { }
       if($api->is_signal_watched_by_session($signal_name, $session)) { }
       if($api->is_signal_watched_by_session($signal_name)) { }
 
     Determine if a given session is explicitly watching a signal. Takes one
     mandatory parameter, a signal name. Takes one optional parameter, a
-    POE::Session object. If this parameter is not provided, it will default
-    to the currently active session. Returns a boolean.
+    POE::Session object or ID. If this parameter is not provided, it will
+    default to the currently active session. Returns a boolean.
 
 AUTHORS
     sungo <sungo@sungo.us> Yuval Kogman <nothingmuch@woobling.org> Chris
-    'BinGOs' Williams <bingos@cpan.org>
+    'BinGOs' Williams <bingos@cpan.org> Philip Gwyn <gwyn@cpan.org>
 
 COPYRIGHT AND LICENSE
     This software is Copyright (c) 2011 by Matt Cashner (sungo).
