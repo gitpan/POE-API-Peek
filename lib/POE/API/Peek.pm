@@ -1,6 +1,6 @@
 package POE::API::Peek;
 {
-  $POE::API::Peek::VERSION = '2.18';
+  $POE::API::Peek::VERSION = '2.19';
 }
 # ABSTRACT: Peek into the internals of a running POE environment
 
@@ -449,6 +449,7 @@ sub session_handle_count {
 
 # PID Fun {{{
 
+
 # session_pid_count {{{
 
 
@@ -558,7 +559,7 @@ POE::API::Peek - Peek into the internals of a running POE environment
 
 =head1 VERSION
 
-version 2.18
+version 2.19
 
 =head1 DESCRIPTION
 
@@ -1074,6 +1075,12 @@ Returns an integer.
 Obtain a count of the active handles for a given session. Takes one
 optional parameter, a POE::Session object or ID. If this parameter is not
 supplied, it will default to the currently active session.
+
+=cut
+
+=pod
+
+=head1 PID UTILITIES
 
 =cut
 
