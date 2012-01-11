@@ -9,24 +9,24 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Peek into the internals of a running POE environment',
-  'AUTHOR' => 'sungo <sungo@sungo.us>, Yuval Kogman <nothingmuch@woobling.org>, Chris \'BinGOs\' Williams <bingos@cpan.org>, Philip Gwyn <gwyn@cpan.org>',
-  'BUILD_REQUIRES' => {},
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.30'
+  "ABSTRACT" => "Peek into the internals of a running POE environment",
+  "AUTHOR" => "sungo <sungo\@sungo.us>, Yuval Kogman <nothingmuch\@woobling.org>, Chris 'BinGOs' Williams <bingos\@cpan.org>, Philip Gwyn <gwyn\@cpan.org>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'POE-API-Peek',
-  'EXE_FILES' => [],
-  'LICENSE' => 'bsd',
-  'NAME' => 'POE::API::Peek',
-  'PREREQ_PM' => {
-    'Devel::Size' => '0',
-    'POE' => '1.311',
-    'Test::More' => '0'
+  "DISTNAME" => "POE-API-Peek",
+  "EXE_FILES" => [],
+  "LICENSE" => "bsd",
+  "NAME" => "POE::API::Peek",
+  "PREREQ_PM" => {
+    "Devel::Size" => 0,
+    "POE" => "1.311",
+    "Test::More" => 0
   },
-  'VERSION' => '2.19',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "2.20",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 

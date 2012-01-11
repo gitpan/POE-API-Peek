@@ -7,7 +7,7 @@
       "Philip Gwyn <gwyn@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200014, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640",
    "license" : [
       "bsd"
    ],
@@ -35,10 +35,10 @@
       "homepage" : "https://github.com/bingos/poe-api-peek",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/bingos/poe-api-peek",
+         "url" : "https://github.com/bingos/poe-api-peek.git",
          "web" : "https://github.com/bingos/poe-api-peek"
       }
    },
-   "version" : "2.19"
+   "version" : "2.20"
 }
 

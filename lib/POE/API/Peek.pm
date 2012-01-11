@@ -1,6 +1,6 @@
 package POE::API::Peek;
 {
-  $POE::API::Peek::VERSION = '2.19';
+  $POE::API::Peek::VERSION = '2.20';
 }
 # ABSTRACT: Peek into the internals of a running POE environment
 
@@ -457,7 +457,13 @@ sub session_pid_count {
     my $self = shift;
     my $session = shift || $self->current_session();
     my $sid = ref $session ? $session->ID : $session;
-    return $poe_kernel->_data_sig_pids_ses($sid);
+    my $ver = $POE::VERSION;
+    $ver =~ s/_.+$//;
+    if($ver < '1.350') {
+	   return $poe_kernel->_data_sig_pids_ses($sid);
+	}
+	carp "session_pid_count() is not available for POE 1.350 and above\n";
+	return;
 }
 
 # }}}
@@ -559,7 +565,7 @@ POE::API::Peek - Peek into the internals of a running POE environment
 
 =head1 VERSION
 
-version 2.19
+version 2.20
 
 =head1 DESCRIPTION
 
@@ -1097,6 +1103,10 @@ Obtain a count of the process IDs being watched by a session. Takes one
 optional parameter, a POE::Session object or ID. If this parameter is not
 supplied, it will default to the currently active session.
 
+Since 1.350 of L<POE> it is no longer possible to query the number of
+processes a session is watching. This method is deprecated and will be
+removed in a future version.
+
 =cut
 
 =pod
@@ -1204,7 +1214,7 @@ Philip Gwyn <gwyn@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2011 by Matt Cashner (sungo).
+This software is Copyright (c) 2012 by Matt Cashner (sungo).
 
 This is free software, licensed under:
 
